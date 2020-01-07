@@ -1,0 +1,30 @@
+spring:
+    profiles:
+        active: dev
+    application:
+        name: FilmPlay
+    jpa:
+        properties:
+            hibernate:
+                enable_lazy_load_no_trans: true
+logging:
+    level:
+        ROOT: INFO
+        org.springframework.web: ERROR
+        com.filmplay.webapi: INFO
+    pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+        file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: ./log/filmplay-application.log
+
+security:
+    oauth2:
+        authorization:
+            token-key-access: permitAll()
+      
+application:
+    cors:
+        allow-credentials: false
+        allowed-origin: "*"
+        allowed-header: "*"
+        allowed-method: "*"
