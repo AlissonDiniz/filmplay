@@ -1,0 +1,287 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: webapi
+  description: FilmPlay WebAPi
+basePath: /api
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+definitions:
+  AuthCredentialsDTO:
+    type: object
+    title: Auth Credentials DTO
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  MovieFilterDTO:
+    type: object
+    title: Movie Filter DTO
+    required:
+      - title
+    properties:
+      name:
+        type: string
+  MovieRequestDTO:
+    type: object
+    title: Movie Request DTO to create new Movie
+    required:
+      - title
+      - synopsis
+      - minutes
+    properties:
+      title:
+        type: string
+      synopsis:
+        type: string
+      minutes:
+        type: integer
+  MovieChangesDTO:
+    type: object
+    title: Movie Changes to update Movie
+    properties:
+      name:
+        type: string
+      synopsys:
+        type: string
+      minutes:
+        type: integer
+  
+  SerieFilterDTO:
+    type: object
+    title: Serie Filter DTO
+    required:
+      - title
+    properties:
+      name:
+        type: string
+  SerieRequestDTO:
+    type: object
+    title: Serie Request DTO to create new Serie
+    required:
+      - title
+      - synopsis
+      - minutes
+    properties:
+      title:
+        type: string
+      synopsis:
+        type: string
+      minutes:
+        type: integer
+  SerieChangesDTO:
+    type: object
+    title: Serie Changes to update Serie
+    properties:
+      name:
+        type: string
+      synopsys:
+        type: string
+      seasons:
+        type: integer
+
+paths:
+  /auth/token:
+    post:
+      description: Authenticate JWT
+      parameters:
+        - name: Auth Credentials
+          in: body
+          required: true
+          schema: 
+            $ref: "#/definitions/AuthCredentialsDTO"
+      responses:
+        201:
+          description: Return object with JWT and Id
+  /movie:
+    post:
+      tags:
+        - Movies
+      description: Fetch all Movies
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Movie Filter DTO"
+          schema:
+            $ref: "#/definitions/MovieFilterDTO"
+        - name: size
+          in: query
+          description: The Page size
+          type: integer
+        - name: page
+          in: query
+          description: The Page number
+          type: integer
+        - name: sort
+          in: query
+          description: The Colunm Name to Sort
+          type: string
+        - name: order
+          in: query
+          description: The Order to Sort
+          enum: [asc, desc]
+          type: string
+      responses:
+        200:
+          description: Returns all Movies
+  /movie/create:
+    post:
+      description: Create a new Movie
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Movie Request DTO"
+          required: true
+          schema: 
+            $ref: "#/definitions/MovieRequestDTO"
+      responses:
+        201:
+          description: Returns new Movie
+  /movie/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the Movie to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the movie with the specified id
+        404:
+          description: Movie not found
+    put:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the Movie to update
+          type: string
+        - in: "body"
+          name: "body"
+          description: "Movie Changes DTO"
+          required: true
+          schema: 
+            $ref: "#/definitions/MovieChangesDTO"
+      responses:
+        200:
+          description: Movie Updated
+        404:
+          description: Movie not found
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the Movie to delete
+          type: string
+      responses:
+        200:
+          description: Movie deleted
+        404:
+          description: Movie not found
+
+  /serie:
+    post:
+      tags:
+        - Series
+      description: Fetch all Series
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Serie Filter DTO"
+          schema:
+            $ref: "#/definitions/SerieFilterDTO"
+        - name: size
+          in: query
+          description: The Page size
+          type: integer
+        - name: page
+          in: query
+          description: The Page number
+          type: integer
+        - name: sort
+          in: query
+          description: The Colunm Name to Sort
+          type: string
+        - name: order
+          in: query
+          description: The Order to Sort
+          enum: [asc, desc]
+          type: string
+      responses:
+        200:
+          description: Returns all Series
+  /serie/create:
+    post:
+      description: Create a new Serie
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Serie Request DTO"
+          required: true
+          schema: 
+            $ref: "#/definitions/SerieRequestDTO"
+      responses:
+        201:
+          description: Returns new Serie
+  /serie/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the Serie to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the serie with the specified id
+        404:
+          description: Serie not found
+    put:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the Serie to update
+          type: string
+        - in: "body"
+          name: "body"
+          description: "Serie Changes DTO"
+          required: true
+          schema: 
+            $ref: "#/definitions/SerieChangesDTO"
+      responses:
+        200:
+          description: Serie Updated
+        404:
+          description: Serie not found
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the Serie to delete
+          type: string
+      responses:
+        200:
+          description: Serie deleted
+        404:
+          description: Serie not found
+
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
