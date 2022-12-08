@@ -14,16 +14,16 @@
     "lint:fix": "eslint --fix -c .eslintrc.json {server,test}/**"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-jwt": "^5.3.1",
     "mongoose": "^5.8.7",
     "mongoose-paginate": "^5.0.3",
     "oauth2-server": "^3.0.1",
     "pino": "^5.13.6",
-    "swagger-express-middleware": "^2.0.4"
+    "swagger-express-middleware": "^4.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
